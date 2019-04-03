@@ -22,8 +22,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableTransactionManagement
 public class MyBatisConfig implements TransactionManagementConfigurer {
-
-
+//用来解析mapper文件，这边主要是因为当时无法识别selectByExample这个方法
     @Autowired
     DataSource dataSource;
 

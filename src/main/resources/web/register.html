@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>login</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+<div class="menu">
+    <table>
+        <tr>
+            <td><a href="./login">密码登录</a>丨</td>
+            <td><a href="./vclogin">验证码登录</a>丨</td>
+            <td><a href="./update">修改密码</a></td>
+        </tr>
+    </table>
+</div>
+<div>
+    <div class="first" id="first">
+        <label class="ld">手&nbsp;机&nbsp;号</label>
+        <input type="text" name="tel" id="tel" onchange="telTest() " maxlength="11" placeholder="填写16位手机号">
+    </div>
+    <div id="first1">
+        <input type="button" onclick="getVc()" id="bGetVc" value="获取验证码" disabled="disabled">
+    </div>
+    <div id="telMSMdiv">
+        <span  id="telMSM"></span >
+    </div>
+</div>
+<div>
+    <div class="second" id="second">
+        <label class="ld">密&nbsp;&nbsp;&nbsp;码</label>
+        <input type="password" id="password" onchange="passTest()" maxlength="16" placeholder="密码最少6位">
+        <span id="passMSM"></span>
+    </div>
+    <div>
+        <label class="ld">用&nbsp;户&nbsp;名</label>
+        <input type="text" id="username"  maxlength="8" placeholder="名字最长8个字符" onchange="usernameTest()">
+        <span id="usernameMSM"></span>
+    </div>
+    <div>
+        <label class="ld">验&nbsp;证&nbsp;码</label>
+        <input type="text" id="vc" disabled="true" maxlength="6" placeholder="必须要先获取验证码" onchange="showvc()">
+        <span id="vcMSM"></span>
+    </div>
+    <div class="bRegister">
+        <button onclick="register()" disabled="true" id="bRegister">注册</button>
+    </div>
+</div>
+</body>
+<script>
+    //用于验证号码格式
+    function  telpp(tel) {
+        if(/^1[356789]\d{9}$/.test(tel)){
+            return true;
+        }else {
+            return false;
+        }
+    }
+    //按钮倒计时
+    function getVc() {
+        var tel = document.getElementById('tel').value;
+        $('#vc').attr('disabled',false);
+        if(telpp(tel)){
+            // alert("验证码已发送");
+            var bGetV = document.getElementById('bGetVc');
+            var time =60;
+            setInterval(function () {
+                if (time>0){
+                    bGetV.value='请等待 '+ time +' S';
+                    bGetV.disabled='true';
+                    time--;
+                }else{
+                    bGetV.value='再次验证';
+                    bGetV.disabled='';
+                }
+            },1000);
+        }else{
+            alert("请填写正确的号码！")
+        }
+    }
+    //用于查询号码是否已经注册
+    function telTest(){
+        var tel = document.getElementById('tel').value;
+        if(telpp(tel)){
+            $.ajax({
+                type: 'GET',
+                url:  'http://localhost:8080/api/gettel',
+                data:{
+                    tel:tel,
+                },
+                timeout:1000,
+                dataType:'json',
+                success:function (data) {
+                    if(data){
+                        document.getElementById("telMSM").style.visibility="visible";
+                        document.getElementById("telMSM").innerHTML='<B>手机号已被注册</B>';
+                        document.getElementById("bGetVc").disabled=true;
+                        return false;
+                    }else {
+                        document.getElementById("telMSM").innerHTML='';
+                        document.getElementById("bGetVc").disabled=false;
+                    }
+                }
+            });
+        }else{
+            document.getElementById("bGetVc").disabled=true;
+        }
+    }
+    //密码不对时进行提示
+    function passTest() {
+        var password = document.getElementById("password").value;
+        password = password.replace(/^\s+|\s+$/g, '');
+        if(!(/^[\w_-]{6,16}$/.test(password))){
+            document.getElementById("password").focus();
+            document.getElementById("passMSM").innerHTML='<B>只能以数字字母减号或下划线</B>';
+            return false;
+        }else{
+            document.getElementById("passMSM").innerHTML='';
+            return true;
+        }
+    }
+    //用于验证用户名是否符合长度大于等于2
+    function usernameTest() {
+        var username = document.getElementById("username").value;
+        //汉字字母数字-和_正则
+        username =  username.replace("[\u4e00-\u9fa5]*[a-z]*[A-Z]*\\d*-*_*\\s*","");
+        if(username.length<2){
+            document.getElementById("username").focus();
+            document.getElementById("usernameMSM").innerHTML='<B>至少2个字符</B>';
+            return false;
+        }else{
+            document.getElementById("usernameMSM").innerHTML='';
+            return true;
+        }
+    }
+    //验证验证码格式是否正确
+    function showvc(){
+        $(function () {
+            var vc = document.getElementById('vc').value;
+            if(vcTest(vc)){
+                document.getElementById("vcMSM").innerHTML='验证码格式通过';
+                document.getElementById("bRegister").disabled=false;
+            }else{
+                document.getElementById("vcMSM").innerHTML='<B>验证码为6位数字</B>';
+                document.getElementById("bRegister").disabled=true;
+                document.getElementById("username").focus();
+            }
+        });
+    }
+    //用于验证码规则验证
+    function vcTest(vc) {
+        if(/^[0-9]{6}$/.test(vc)){
+            return true;
+        }else {
+            return false;
+        }
+    }
+    //注册用户调用提交功能
+    function register() {
+        var tel = document.getElementById('tel').value;
+        var vc = document.getElementById('vc').value;
+        var password = document.getElementById('password').value;
+        var username = document.getElementById('username').value;
+        test1=telpp(tel);
+        test2=passTest();
+        test3=usernameTest();
+        test4=vcTest(vc);
+        if (test1&&test2&&test3&&test4){
+            $.ajax({
+                url:'http://localhost:8080/api/yzmtt',
+                async: true,
+                data: {
+                    tel:tel,
+                    vc:vc
+                },
+                timeout:1000,
+                dataType:'json',
+                success:function (data) {
+                    console.log(data.infoId);
+                    console.log(data.info);
+                    if (data.infoId=="1"){
+                        // alert('手机号验证码验证成功')
+                        $.ajax({
+                            url:'http://localhost:8080/api/insertuu',
+                            async:true,
+                            data:{
+                                tel:tel,
+                                password:password,
+                                username:username,
+                                vc:vc,
+                                sign:1
+                            },
+                            timeout:1000,
+                            dataType:'json',
+                            success:function (data) {
+                                if(data.infoId=="1"){
+                                    alert("恭喜你注册成功");
+                                    window.location.href='http://localhost:8080/api/login'
+                                }else{
+                                    alert(data.info);
+                                }
+                            }
+                        });
+                    } else{
+                        alert(data.info);
+                    }
+                }
+            });
+        }else{
+            alert("注册失败！部分字段不符合规则！");
+        }
+    }
+</script>
+</html>
+<style type="text/css">
+    .ld{
+        float: left;
+        text-align: justify;
+        width: 60px;
+    }
+    #first{
+        float: left;
+    }
+    #second{
+        clear: left;
+    }
+    #telMSMdiv{
+        color: #ff0000;
+        float: left;
+    }
+    #first1 {
+        float: left;
+    }
+    #first2 {
+        float: left;
+    }
+    span{
+        color: #ff0000;
+    }
+</style>

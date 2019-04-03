@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://vuejs.org/js/vue.min.js"></script>
+    <title>login</title>
+</head>
+<body>
+<div id="app">
+    <div class="menu">
+        <table>
+            <tr>
+                <td><a href="./vclogin">验证码登录</a>丨</td>
+                <td><a href="./register">注册账户</a>丨</td>
+                <td><a href="./update">修改密码</a></td>
+            </tr>
+        </table>
+    </div>
+    <div class="first">
+        <label class="ld" >手&nbsp;机&nbsp;号</label>
+        <input v-model="tel" maxlength="11">
+    </div>
+    <div class="second">
+        <label class="ld" >密&nbsp;&nbsp;&nbsp;码</label>
+        <input type="password" v-model="password" maxlength="16">
+    </div>
+    <div class="Blogin">
+        <button id="login" @click="login()" >登录</button>
+    </div>
+    <div>{{getApi}}</div>
+</div>
+</body>
+<script>
+   new Vue({
+        el:'#app',
+        data:{
+            tel:'',
+            password:'',
+            getApi:'',
+        },
+        methods:{
+            login:function () {
+                this.getApi='http://localhost:8080/api/login/pass';
+                this.getApi = this.getApi + '?tel=' + this.tel;
+                this.getApi = this.getApi +  '&' + 'password=' + this.password;
+                self = this;
+                fetch(this.getApi).then(function (response) {
+                    console.log(response);
+                    console.log(response.redirected)
+                    if(!response.redirected){
+                        // window.location.href='http://localhost:8080/login';
+                        window.location.href='https://www.avengers.wang';
+                    }else{
+                        window.location.href='http://localhost:8080/fail';
+                    }
+                })
+
+            },
+
+
+        }
+
+    })
+</script>
+</html>
+<style type="text/css">
+    .ld{
+        float: left;
+        text-align: justify;
+        width: 60px;
+    }
+</style>

@@ -15,8 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        System.out.println(request);
+        System.out.println(response);
         System.out.println("1111111111");
-        Object username = request.getSession();
+        Object username = request.getSession().getAttribute("username");
         if(null ==  username || !(username instanceof  String)){
             response.sendRedirect("/fail");
             System.out.println("2222222222---fail");
