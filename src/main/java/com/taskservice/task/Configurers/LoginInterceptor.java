@@ -20,7 +20,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         System.out.println("1111111111");
         Object username = request.getSession().getAttribute("username");
         if(null ==  username || !(username instanceof  String)){
-            response.sendRedirect("/fail");
+            response.sendRedirect("/main");
             System.out.println("2222222222---fail");
             return false;
         }

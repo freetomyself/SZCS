@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://vuejs.org/js/vue.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <title>login</title>
 </head>
 <body>
@@ -18,57 +19,97 @@
             </tr>
         </table>
     </div>
+    <br>
     <div class="first">
         <label class="ld" >手&nbsp;机&nbsp;号</label>
-        <input v-model="tel" maxlength="11">
+        <input type="text" maxlength="11" id="tel" onchange="telTest()">
+        <br>
+        <span id="telMSM">&nbsp;</span>
     </div>
     <div class="second">
         <label class="ld" >密&nbsp;&nbsp;&nbsp;码</label>
-        <input type="password" v-model="password" maxlength="16">
+        <input type="password"  maxlength="16" onchange="passTest()" id="password">
+        <br>
+        <span id="passMSM">&nbsp;</span>
     </div>
-    <div class="Blogin">
-        <button id="login" @click="login()" >登录</button>
+    <div class="blogin">
+        <button type="button" onclick="login()" id="blogin" style="width: 226px">登录</button>
     </div>
-    <div>{{getApi}}</div>
 </div>
 </body>
 <script>
-   new Vue({
-        el:'#app',
-        data:{
-            tel:'',
-            password:'',
-            getApi:'',
-        },
-        methods:{
-            login:function () {
-                this.getApi='http://localhost:8080/api/login/pass';
-                this.getApi = this.getApi + '?tel=' + this.tel;
-                this.getApi = this.getApi +  '&' + 'password=' + this.password;
-                self = this;
-                fetch(this.getApi).then(function (response) {
-                    console.log(response);
-                    console.log(response.redirected)
-                    if(!response.redirected){
-                        // window.location.href='http://localhost:8080/login';
-                        window.location.href='https://www.avengers.wang';
-                    }else{
-                        window.location.href='http://localhost:8080/fail';
+    function login() {
+        var tel=document.getElementById('tel').value;
+        var password=document.getElementById('password').value;
+        if (passTest()&&telpp(tel)){
+            $.ajax({
+                type: 'GET',
+                url:  'http://localhost:8080/api/login/pass',
+                data:{
+                    tel:tel,
+                    password:password
+                },
+                timeout:1000,
+                dataType:'json',
+                success:function (data) {
+                    if((data.username).length>1){
+                        window.location.href="https://www.avengers.wang/";
+                    }else {
+                        alert('手机或密码不正确');
                     }
-                })
-
-            },
-
-
+                }
+            });
+        }else{
+            alert("账号或密码不能为空！");
         }
+    }
 
-    })
+    //用于验证号码格式
+    function  telpp(tel) {
+        if(/^1[356789]\d{9}$/.test(tel)){
+            return true;
+        }else {
+            document.getElementById("telMSM").innerHTML='<B>手机号不规范</B>';
+            return false;
+        }
+    }
+    function passTest() {
+        var password = document.getElementById("password").value;
+        password = password.replace(/^\s+|\s+$/g, '');
+        if(!(/^[\w_-]{6,16}$/.test(password))){
+            document.getElementById("password").focus();
+            document.getElementById("passMSM").innerHTML='<B>只能以数字字母减号或下划线</B>';
+            return false;
+        }else{
+            document.getElementById("passMSM").innerHTML='&nbsp;';
+            return true;
+        }
+    }
+    function telTest() {
+        var tel=document.getElementById('tel').value;
+        document.getElementById("telMSM").innerHTML='<B>手机号不规范</B>';
+        if(telpp(tel)){
+            document.getElementById('telMSM').innerHTML="&nbsp;";
+        }
+    }
+
 </script>
 </html>
 <style type="text/css">
+    #app{
+        width: 500px;
+        height: 300px;
+    }
     .ld{
         float: left;
         text-align: justify;
         width: 60px;
+    }
+    span{
+        color: red;
+    }
+    .blogin{
+        float: right;
+        padding-right: 54%;
     }
 </style>

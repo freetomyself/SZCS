@@ -109,7 +109,6 @@ public class LoginController {
     @ApiOperation("通过密码登录")
     @GetMapping("/login/pass")
     public Map<String,Object> getLoginTelandPass(@RequestParam String tel, @RequestParam String password, HttpServletRequest request, HttpServletResponse response) throws NoSuchAlgorithmException, IOException {
-        System.out.println("111");
         if (loginService.getLoginTelandPass(tel, password) != null) {
             HttpSession session = request.getSession();
             String username = loginService.getLoginTelandPass(tel, password).getUsername();
@@ -120,7 +119,7 @@ public class LoginController {
             resultMap.put("username",username);
             return resultMap;
         }
-        response.sendRedirect("/fail");
+        response.sendRedirect("/main");
         return null;
     }
 
@@ -129,7 +128,7 @@ public class LoginController {
     public Boolean updatePassByTel(@RequestParam String tel, @RequestParam String vc, @RequestParam String password, @RequestParam(required = false) String username,HttpServletRequest request,HttpServletResponse response) throws IOException, NoSuchAlgorithmException {
         HttpSession session = request.getSession();
         if(session.getAttribute("username")==null){
-            response.sendRedirect("/fail");
+            response.sendRedirect("/main");
             return null;
         }
         return loginService.updatePassByTel(tel, vc, password, username);
@@ -150,8 +149,12 @@ public class LoginController {
     //未注册用户发验证
     @ApiOperation("未注册用户发送消息")
     @GetMapping("/inserttel")
-    public String telinsert(@RequestParam String tel,HttpServletRequest request ) {
-        return vcresourcesService.insertTel(tel);
+    public Map<String,Object> telinsert(@RequestParam String tel) {
+        String info = vcresourcesService.insertTel(tel);
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("infoId",info);
+        map.put("info",LoginTypes.getLoginTypes(Integer.parseInt(info)));
+        return map;
     }
 
     //已注册用户发验证
@@ -164,7 +167,7 @@ public class LoginController {
     @GetMapping("/unlogin")
     public String  unlogin(HttpServletRequest request,HttpServletResponse response) throws IOException {
         request.getSession().invalidate();
-        response.sendRedirect("/fail");
+        response.sendRedirect("/main");
         return null;
     }
 

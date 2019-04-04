@@ -67,9 +67,9 @@ public class VcresourcesImp implements VcresourcesService {
             String vc = testMt3.test(tel);
             vcresources.setVc(vc);
             vcresourcesMapper.insertSelective(vcresources);
-            return LoginTypes.MSGC.getMessage();
+            return String.valueOf(LoginTypes.MSGC.getState());
         }
-        return LoginTypes.TELOVER.getMessage();
+        return String.valueOf(LoginTypes.TELOVER.getState());
     }
 
     //登陆调用

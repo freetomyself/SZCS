@@ -8,45 +8,48 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
-<div class="menu">
-    <table>
-        <tr>
-            <td><a href="./login">密码登录</a>丨</td>
-            <td><a href="./vclogin">验证码登录</a>丨</td>
-            <td><a href="./update">修改密码</a></td>
-        </tr>
-    </table>
-</div>
-<div>
-    <div class="first" id="first">
-        <label class="ld">手&nbsp;机&nbsp;号</label>
-        <input type="text" name="tel" id="tel" onchange="telTest() " maxlength="11" placeholder="填写16位手机号">
+<div id="registerMain">
+    <div class="menu">
+        <table>
+            <tr>
+                <td><a href="./login">密码登录</a>丨</td>
+                <td><a href="./vclogin">验证码登录</a>丨</td>
+                <td><a href="./update">修改密码</a></td>
+            </tr>
+        </table>
     </div>
-    <div id="first1">
-        <input type="button" onclick="getVc()" id="bGetVc" value="获取验证码" disabled="disabled">
-    </div>
-    <div id="telMSMdiv">
-        <span  id="telMSM"></span >
-    </div>
-</div>
-<div>
-    <div class="second" id="second">
-        <label class="ld">密&nbsp;&nbsp;&nbsp;码</label>
-        <input type="password" id="password" onchange="passTest()" maxlength="16" placeholder="密码最少6位">
-        <span id="passMSM"></span>
+    <br>
+    <div>
+        <div class="first" id="first">
+            <label class="ld">手&nbsp;机&nbsp;号</label>
+            <input type="text" name="tel" id="tel" onchange="telTest() " maxlength="11" placeholder="填写16位手机号">
+            <br>
+            <span  id="telMSM">&nbsp;</span >
+        </div>
     </div>
     <div>
-        <label class="ld">用&nbsp;户&nbsp;名</label>
-        <input type="text" id="username"  maxlength="8" placeholder="名字最长8个字符" onchange="usernameTest()">
-        <span id="usernameMSM"></span>
-    </div>
-    <div>
-        <label class="ld">验&nbsp;证&nbsp;码</label>
-        <input type="text" id="vc" disabled="true" maxlength="6" placeholder="必须要先获取验证码" onchange="showvc()">
-        <span id="vcMSM"></span>
-    </div>
-    <div class="bRegister">
-        <button onclick="register()" disabled="true" id="bRegister">注册</button>
+        <div class="second" id="second">
+            <label class="ld">密&nbsp;&nbsp;&nbsp;码</label>
+            <input type="password" id="password" onchange="passTest()" maxlength="16" placeholder="密码最少6位">
+            <br>
+            <span id="passMSM">&nbsp;</span>
+        </div>
+        <div>
+            <label class="ld">用&nbsp;户&nbsp;名</label>
+            <input type="text" id="username"  maxlength="8" placeholder="名字最长8个字符" onchange="usernameTest()">
+            <br>
+            <span id="usernameMSM">&nbsp;</span>
+        </div>
+        <div>
+            <label class="ld">验&nbsp;证&nbsp;码</label>
+            <input type="text" id="vc" disabled="true" maxlength="6" placeholder="需获取验证码" onchange="showvc()">
+            <input type="button" onclick="getVc()" id="bGetVc" value="获取验证码" disabled="disabled">
+            <br>
+            <span id="vcMSM">&nbsp;</span>
+        </div>
+        <div class="bRegister">
+            <button onclick="register()" disabled="true" id="bRegister" style="width: 226px" >注册</button>
+        </div>
     </div>
 </div>
 </body>
@@ -65,24 +68,42 @@
         $('#vc').attr('disabled',false);
         if(telpp(tel)){
             // alert("验证码已发送");
-            var bGetV = document.getElementById('bGetVc');
-            var time =60;
-            setInterval(function () {
-                if (time>0){
-                    bGetV.value='请等待 '+ time +' S';
-                    bGetV.disabled='true';
-                    time--;
-                }else{
-                    bGetV.value='再次验证';
-                    bGetV.disabled='';
+            $.ajax({
+                type: 'GET',
+                url:  'http://localhost:8080/api/inserttel',
+                data:{
+                    tel:tel,
+                },
+                timeout:1000,
+                dataType:'json',
+                success:function (data) {
+                    if(data.infoId=='5'){
+                        alert(data.info);
+                        var bGetV = document.getElementById('bGetVc');
+                        var time =60;
+                        setInterval(function () {
+                            if (time>0){
+                                bGetV.value='请等待 '+ time +' S';
+                                bGetV.disabled='true';
+                                time--;
+                            }else{
+                                bGetV.value='再次验证';
+                                bGetV.disabled='';
+                            }
+                        },1000);
+                    }else{
+                        document.getElementById("telMSM").innerHTML=data.info;
+                    }
                 }
-            },1000);
+
+            });
         }else{
             alert("请填写正确的号码！")
         }
     }
     //用于查询号码是否已经注册
     function telTest(){
+        document.getElementById("telMSM").innerHTML='<B>手号码不规范<B>';
         var tel = document.getElementById('tel').value;
         if(telpp(tel)){
             $.ajax({
@@ -100,7 +121,7 @@
                         document.getElementById("bGetVc").disabled=true;
                         return false;
                     }else {
-                        document.getElementById("telMSM").innerHTML='';
+                        document.getElementById("telMSM").innerHTML='&nbsp;';
                         document.getElementById("bGetVc").disabled=false;
                     }
                 }
@@ -118,7 +139,7 @@
             document.getElementById("passMSM").innerHTML='<B>只能以数字字母减号或下划线</B>';
             return false;
         }else{
-            document.getElementById("passMSM").innerHTML='';
+            document.getElementById("passMSM").innerHTML='&nbsp;';
             return true;
         }
     }
@@ -132,7 +153,7 @@
             document.getElementById("usernameMSM").innerHTML='<B>至少2个字符</B>';
             return false;
         }else{
-            document.getElementById("usernameMSM").innerHTML='';
+            document.getElementById("usernameMSM").innerHTML='&nbsp;';
             return true;
         }
     }
@@ -184,7 +205,7 @@
                     if (data.infoId=="1"){
                         // alert('手机号验证码验证成功')
                         $.ajax({
-                            url:'http://localhost:8080/api/insertuu',
+                            url:'http://localhost:8080/api/insertuser',
                             async:true,
                             data:{
                                 tel:tel,
@@ -221,23 +242,18 @@
         text-align: justify;
         width: 60px;
     }
-    #first{
-        float: left;
-    }
-    #second{
-        clear: left;
-    }
-    #telMSMdiv{
-        color: #ff0000;
-        float: left;
-    }
-    #first1 {
-        float: left;
-    }
-    #first2 {
-        float: left;
-    }
     span{
         color: #ff0000;
+    }
+    #registerMain{
+        width: 500px;
+        height: 300px;
+    }
+    .bRegister{
+        float: right;
+        padding-right: 54%;
+    }
+    #vc{
+        width: 80px;
     }
 </style>

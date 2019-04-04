@@ -15,16 +15,10 @@ import javax.servlet.http.HttpSession;
 @Controller
 //@RequestMapping("/api")
 public class webController {
-    @RequestMapping("/fail")
-    public String index(){
-        return "login";
-    }
+
     @RequestMapping("/login")
-    public String login(HttpServletRequest request) {
-        if (request.getSession().getAttribute("username") == null) {
-            return "login";
-        }
-        return "success";
+    public String login() {
+        return "login";
     }
     @RequestMapping("/register")
     public String register(){
@@ -37,5 +31,9 @@ public class webController {
     @RequestMapping("/update")
     public String update(){
         return "update";
+    }
+    @RequestMapping("/main")
+    public String main(){
+        return "main";
     }
 }
