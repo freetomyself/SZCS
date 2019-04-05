@@ -58,7 +58,6 @@ public class LoginController {
     public Map<String,Object>  yzmTest(@RequestParam String tel ,@RequestParam String vc){
         String info = vcresourcesService.checkVc(tel,vc);
         System.out.println(info);
-
         Map<String,Object> map =new HashMap<String,Object>();
         map.put("infoId",info);
         map.put("info",LoginTypes.getLoginTypes(Integer.parseInt(info)));
@@ -95,15 +94,17 @@ public class LoginController {
 
     @ApiOperation("通过验证码登录")
     @GetMapping("/login/vc")
-    public Boolean getLoginTelandYzm(@RequestParam String tel, @RequestParam String vc, HttpServletRequest request ) {
+    public Map<String,Object> getLoginTelandYzm(@RequestParam String tel, @RequestParam String vc, HttpServletRequest request ) {
+        Map<String,Object> map =new HashMap<String,Object>();
         if (loginService.getLoginTelandYzm(tel, vc) != null) {
             HttpSession session = request.getSession();
             String username = loginService.getLoginTelandYzm(tel, vc).getUsername();
             session.setAttribute("username", username);
-            return true;
+            map.put("username",username);
+            return map;
         }
-        return false;
-//        return loginService.getLoginTelandYzm(tel,vc);
+        map.put("username","");
+        return map;
     }
 
     @ApiOperation("通过密码登录")
@@ -156,13 +157,17 @@ public class LoginController {
         map.put("info",LoginTypes.getLoginTypes(Integer.parseInt(info)));
         return map;
     }
-
     //已注册用户发验证
     @ApiOperation("已注册用户发送消息")
     @GetMapping("/sendYzm")
-    public String sendYzm(@RequestParam String tel) {
-        return vcresourcesService.sendYzm(tel);
+    public Map<String,Object> sendYzm(@RequestParam String tel) {
+        String info =vcresourcesService.sendYzm(tel);
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("infoId",info);
+        map.put("info",LoginTypes.getLoginTypes(Integer.parseInt(info)));
+        return map;
     }
+    //退出账号
     @ApiOperation("退出账号")
     @GetMapping("/unlogin")
     public String  unlogin(HttpServletRequest request,HttpServletResponse response) throws IOException {

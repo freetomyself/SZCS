@@ -4,38 +4,155 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <title>login</title>
 </head>
 <body>
 <form>
-    <div class="menu">
-        <table>
-            <tr>
-                <td><a href="./login">密码登录</a>丨</td>
-                <td><a href="./register">注册账户</a>丨</td>
-                <td><a href="./update">修改密码</a></td>
-            </tr>
-        </table>
-    </div>
-    <br>
-    <div class="first">
-        <label class="ld">手&nbsp;机&nbsp;号</label>
-        <input type="text" name="tel">
-    </div>
-    <div class="second">
-        <label class="ld">验&nbsp;证&nbsp;码</label>
-        <input type="text" name="password">
-    </div>
-    <div class="Blogin">
-        <button>登录</button>
+    <div id="registerMain">
+        <div class="menu">
+            <table>
+                <tr>
+                    <td><a href="./login">密码登录</a>丨</td>
+                    <td><a href="./register">注册账户</a>丨</td>
+                    <td><a href="./update">修改密码</a></td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div class="first">
+            <label class="ld">手&nbsp;机&nbsp;号</label>
+            <input type="text" id="tel" onchange="telTest()" placeholder="填写11位手机号">
+            <br>
+            <span id="telMSM">&nbsp;</span>
+        </div>
+        <div class="second">
+            <label class="ld">验&nbsp;证&nbsp;码</label>
+            <input type="text" id="vc" maxlength="6" placeholder="需获取验证码" onchange="vcTest()">
+            <input type="button" onclick="getVc() "id="bGetVc" value="获取验证码" >
+            <br>
+            <span id="vcMSM">&nbsp;</span>
+        </div>
+        <div class="blogin">
+            <input type="button" style="width: 226px" onclick="login()"  id="blogin" value="登录">
+        </div>
     </div>
 </form>
 </body>
+<script>
+    function login() {
+        var tel=document.getElementById('tel').value;
+        var vc=document.getElementById('vc').value;
+        if (vcTest()&&telpp(tel)){
+            $.ajax({
+                type: 'GET',
+                url:  'http://localhost:8080/api/login/vc',
+                data:{
+                    tel:tel,
+                    vc:vc
+                },
+                timeout:1000,
+                dataType:'json',
+                success:function (data) {
+                    if((data.username).length>1){
+                        window.location.href="https://www.avengers.wang/";
+                    }else {
+                        alert('验证码错误！');
+                    }
+                }
+            });
+        }else{
+            alert("账号或密码不能为空！");
+        }
+    }
+
+    //用于验证号码格式
+    function  telpp(tel) {
+        if(/^1[356789]\d{9}$/.test(tel)){
+            return true;
+        }else {
+            document.getElementById("telMSM").innerHTML='<B>手机号不规范</B>';
+            return false;
+        }
+    }
+    function vcTest() {
+        var vc = document.getElementById("vc").value;
+        vc = vc.replace(/^\s+|\s+$/g, '');
+        if(!(/^[\d]{6}$/.test(vc))){
+            document.getElementById("vc").focus();
+            document.getElementById("vcMSM").innerHTML='<B>验证码为6位数字</B>';
+            return false;
+        }else{
+            document.getElementById("vcMSM").innerHTML='&nbsp;';
+            return true;
+        }
+    }
+    function telTest() {
+        var tel=document.getElementById('tel').value;
+        document.getElementById("telMSM").innerHTML='<B>手机号不规范</B>';
+        if(telpp(tel)){
+            document.getElementById('telMSM').innerHTML="&nbsp;";
+        }
+    }
+    //按钮倒计时
+    function getVc() {
+        var tel = document.getElementById('tel').value;
+        if(telpp(tel)){
+            alert("验证码已发送");
+            $.ajax({
+                type: 'GET',
+                url:  'http://localhost:8080/api/sendYzm',
+                data:{
+                    tel:tel,
+                },
+                timeout:1000,
+                dataType:'json',
+                success:function (data) {
+                    console.log(data);
+                    if(data.infoId='1'){
+                        alert(data.info);
+                        var bGetV = document.getElementById('bGetVc');
+                        var time =60;
+                        setInterval(function () {
+                            if (time>0){
+                                bGetV.value='请等待 '+ time +' S';
+                                bGetV.disabled='true';
+                                time--;
+                            }else{
+                                bGetV.value='再次验证';
+                                bGetV.disabled='';
+                            }
+                        },1000);
+                    }else{
+                        // document.getElementById("telMSM").innerHTML=data.infoId;
+                        alert(123);
+                    }
+                }
+            });
+        }else{
+            alert("请填写正确的号码！")
+        }
+    }
+</script>
 </html>
 <style type="text/css">
     .ld{
         float: left;
         text-align: justify;
         width: 60px;
+    }
+    .blogin{
+        float: right;
+        padding-right: 54%;
+    }
+    #registerMain{
+        width: 500px;
+        height: 300px;
+    }
+    span{
+        color: #ff0000;
+    }
+    #vc{
+        width: 80px;
     }
 </style>

@@ -22,7 +22,7 @@
     <div>
         <div class="first" id="first">
             <label class="ld">手&nbsp;机&nbsp;号</label>
-            <input type="text" name="tel" id="tel" onchange="telTest() " maxlength="11" placeholder="填写16位手机号">
+            <input type="text" name="tel" id="tel" onchange="telTest() " maxlength="11" placeholder="填写11位手机号">
             <br>
             <span  id="telMSM">&nbsp;</span >
         </div>
@@ -103,7 +103,6 @@
     }
     //用于查询号码是否已经注册
     function telTest(){
-        document.getElementById("telMSM").innerHTML='<B>手号码不规范<B>';
         var tel = document.getElementById('tel').value;
         if(telpp(tel)){
             $.ajax({
@@ -127,6 +126,7 @@
                 }
             });
         }else{
+            document.getElementById("telMSM").innerHTML='<B>手机号不规范</B>';
             document.getElementById("bGetVc").disabled=true;
         }
     }
