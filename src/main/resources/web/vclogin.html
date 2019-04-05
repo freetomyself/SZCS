@@ -8,36 +8,34 @@
     <title>login</title>
 </head>
 <body>
-<form>
-    <div id="registerMain">
-        <div class="menu">
-            <table>
-                <tr>
-                    <td><a href="./login">密码登录</a>丨</td>
-                    <td><a href="./register">注册账户</a>丨</td>
-                    <td><a href="./update">修改密码</a></td>
-                </tr>
-            </table>
-        </div>
-        <br>
-        <div class="first">
-            <label class="ld">手&nbsp;机&nbsp;号</label>
-            <input type="text" id="tel" onchange="telTest()" placeholder="填写11位手机号">
-            <br>
-            <span id="telMSM">&nbsp;</span>
-        </div>
-        <div class="second">
-            <label class="ld">验&nbsp;证&nbsp;码</label>
-            <input type="text" id="vc" maxlength="6" placeholder="需获取验证码" onchange="vcTest()">
-            <input type="button" onclick="getVc() "id="bGetVc" value="获取验证码" >
-            <br>
-            <span id="vcMSM">&nbsp;</span>
-        </div>
-        <div class="blogin">
-            <input type="button" style="width: 226px" onclick="login()"  id="blogin" value="登录">
-        </div>
+<div id="registerMain">
+    <div class="menu">
+        <table>
+            <tr>
+                <td><a href="./login">密码登录</a>丨</td>
+                <td><a href="./register">注册账户</a>丨</td>
+                <td><a href="./update">修改密码</a></td>
+            </tr>
+        </table>
     </div>
-</form>
+    <br>
+    <div class="first">
+        <label class="ld">手&nbsp;机&nbsp;号</label>
+        <input type="text" id="tel" onchange="telTest()" placeholder="填写11位手机号">
+        <br>
+        <span id="telMSM">&nbsp;</span>
+    </div>
+    <div class="second">
+        <label class="ld">验&nbsp;证&nbsp;码</label>
+        <input type="text" id="vc" maxlength="6" placeholder="需获取验证码" onchange="vcTest()">
+        <input type="button" onclick="getVc() "id="bGetVc" value="获取验证码" >
+        <br>
+        <span id="vcMSM">&nbsp;</span>
+    </div>
+    <div class="blogin">
+        <input type="button" style="width: 226px" onclick="login()"  id="blogin" value="登录">
+    </div>
+</div>
 </body>
 <script>
     function login() {
@@ -47,6 +45,7 @@
             $.ajax({
                 type: 'GET',
                 url:  'http://localhost:8080/api/login/vc',
+                async:false,
                 data:{
                     tel:tel,
                     vc:vc
@@ -94,22 +93,27 @@
             document.getElementById('telMSM').innerHTML="&nbsp;";
         }
     }
+    function gettel(){
+        var tel =document.getElementById('tel').value;
+        return tel;
+    }
     //按钮倒计时
+
     function getVc() {
         var tel = document.getElementById('tel').value;
         if(telpp(tel)){
-            alert("验证码已发送");
             $.ajax({
                 type: 'GET',
-                url:  'http://localhost:8080/api/sendYzm',
+                url:  'http://localhost:8080/api/sendyzm',
+                //sasync--异步
+                async:false,
                 data:{
                     tel:tel,
                 },
                 timeout:1000,
                 dataType:'json',
                 success:function (data) {
-                    console.log(data);
-                    if(data.infoId='1'){
+                    if(data.infoId=='5'){
                         alert(data.info);
                         var bGetV = document.getElementById('bGetVc');
                         var time =60;
@@ -124,10 +128,22 @@
                             }
                         },1000);
                     }else{
-                        // document.getElementById("telMSM").innerHTML=data.infoId;
-                        alert(123);
+                        var bGetV = document.getElementById('bGetVc');
+                        var time =60;
+                        setInterval(function () {
+                            if (time>0){
+                                bGetV.value='请等待 '+ time +' S';
+                                bGetV.disabled='true';
+                                time--;
+                            }else{
+                                bGetV.value='再次验证';
+                                bGetV.disabled='';
+                            }
+                        },1000);
+                        document.getElementById("telMSM").innerHTML=data.info;
                     }
                 }
+
             });
         }else{
             alert("请填写正确的号码！")

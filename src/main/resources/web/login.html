@@ -22,13 +22,13 @@
     <br>
     <div class="first">
         <label class="ld" >手&nbsp;机&nbsp;号</label>
-        <input type="text" maxlength="11" id="tel" onchange="telTest()">
+        <input type="text" maxlength="11" id="tel" onchange="telTest()" placeholder="填写11位手机号">
         <br>
         <span id="telMSM">&nbsp;</span>
     </div>
     <div class="second">
         <label class="ld" >密&nbsp;&nbsp;&nbsp;码</label>
-        <input type="password"  maxlength="16" onchange="passTest()" id="password">
+        <input type="password"  maxlength="16" onchange="passTest()" id="password" placeholder="密码最少6位">
         <br>
         <span id="passMSM">&nbsp;</span>
     </div>
@@ -45,6 +45,7 @@
             $.ajax({
                 type: 'GET',
                 url:  'http://localhost:8080/api/login/pass',
+                async:false,
                 data:{
                     tel:tel,
                     password:password

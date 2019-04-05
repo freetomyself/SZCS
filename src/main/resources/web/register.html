@@ -71,6 +71,7 @@
             $.ajax({
                 type: 'GET',
                 url:  'http://localhost:8080/api/inserttel',
+                async:false,
                 data:{
                     tel:tel,
                 },
@@ -108,6 +109,7 @@
             $.ajax({
                 type: 'GET',
                 url:  'http://localhost:8080/api/gettel',
+                async:false,
                 data:{
                     tel:tel,
                 },
@@ -206,7 +208,7 @@
                         // alert('手机号验证码验证成功')
                         $.ajax({
                             url:'http://localhost:8080/api/insertuser',
-                            async:true,
+                            async:false,
                             data:{
                                 tel:tel,
                                 password:password,

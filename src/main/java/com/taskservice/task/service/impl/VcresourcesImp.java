@@ -85,7 +85,7 @@ public class VcresourcesImp implements VcresourcesService {
             List<Vcresources> vcresourcess = vcresourcesMapper.selectByExample(vcresourcesExample);
             if (vcresourcess.size()>=5){
                 //短信到5条
-                return String.valueOf(LoginTypes.SMSOUT.getState() );
+                return String.valueOf(LoginTypes.SMSOUT.getState());
 //                + "，当前发送条数为：" + vcresourcess.size()
             }else{
                 //调用短信

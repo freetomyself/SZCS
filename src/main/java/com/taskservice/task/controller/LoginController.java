@@ -159,10 +159,10 @@ public class LoginController {
     }
     //已注册用户发验证
     @ApiOperation("已注册用户发送消息")
-    @GetMapping("/sendYzm")
+    @GetMapping("/sendyzm")
     public Map<String,Object> sendYzm(@RequestParam String tel) {
-        String info =vcresourcesService.sendYzm(tel);
         Map<String,Object> map = new HashMap<String,Object>();
+        String info =vcresourcesService.sendYzm(tel);
         map.put("infoId",info);
         map.put("info",LoginTypes.getLoginTypes(Integer.parseInt(info)));
         return map;
