@@ -126,24 +126,18 @@ public class LoginController {
 
     @ApiOperation("通过手机号、更新密码、用户名（可以不填，不填为原值）")
     @GetMapping("/updatepass")
-    public Boolean updatePassByTel(@RequestParam String tel, @RequestParam String vc, @RequestParam String password, @RequestParam(required = false) String username,HttpServletRequest request,HttpServletResponse response) throws IOException, NoSuchAlgorithmException {
-        HttpSession session = request.getSession();
-        if(session.getAttribute("username")==null){
-            response.sendRedirect("/main");
-            return null;
-        }
-        return loginService.updatePassByTel(tel, vc, password, username);
+    public Map<String,Object>  updatePassByTel(@RequestParam String tel, @RequestParam String vc, @RequestParam String password) throws IOException, NoSuchAlgorithmException {
+        String info = loginService.updatePassByTel(tel, vc, password);
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("infoId",info);
+        map.put("info",LoginTypes.getLoginTypes(Integer.parseInt(info)));
+        return map;
     }
 
     //判断登录是否成功
     @ApiOperation("判断登录是否成功")
     @GetMapping("/tel")
     public String telcs(@RequestParam String tel, @RequestParam String vc,HttpServletRequest request,HttpServletResponse response) throws IOException {
-//        HttpSession session =request.getSession();
-//        if(session.getAttribute("username")==null){
-//            response.sendRedirect("/fail");
-//            return null;
-//        }
         return LoginTypes.getLoginTypes(Integer.parseInt(vcresourcesService.checkVc(tel, vc)));
     }
 

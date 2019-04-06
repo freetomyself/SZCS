@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <title>login</title>
 </head>
 <body>
-<form>
+<div id="registerMain">
     <div class="menu">
         <table>
             <tr>
@@ -20,27 +21,194 @@
     <br>
     <div class="first">
         <label class="ld">手&nbsp;机&nbsp;号</label>
-        <input type="text" name="tel">
-        <input type="button" value="获取验证码">
-    </div>
-    <div>
-        <label class="ld">新&nbsp;密&nbsp;码</label>
-        <input type="text" name="username">
+        <input type="text"  id="tel" onchange="telTest() " maxlength="11" placeholder="填写11位手机号">
+        <br>
+        <span id="telMSM">&nbsp;</span>
     </div>
     <div>
         <label class="ld">验&nbsp;证&nbsp;码</label>
-        <input type="text" name="vc">
+        <input type="text" id="vc"  maxlength="6" placeholder="需获取验证码" onchange="showvc()">
+        <input type="button" onclick="getVc()" id="bGetVc" value="获取验证码" disabled="disabled">
+        <br>
+        <span id="vcMSM">&nbsp;</span>
+    </div>
+    <div>
+        <label class="ld">新&nbsp;密&nbsp;码</label>
+        <input type="password" id="password" onchange="passTest()" maxlength="16" placeholder="密码最少6位">
+        <br>
+        <span id="passMSM">&nbsp;</span>
     </div>
     <div class="Blogin">
-        <button >登录</button>
+        <input type="button" value="更新密码" id="bUpdatePass" style="width: 226px" onclick="bUpdatePass()">
     </div>
-</form>
+</div>
 </body>
+<script>
+    //用于验证号码格式
+    function  telpp(tel) {
+        if(/^1[356789]\d{9}$/.test(tel)){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    function telTest(){
+        var tel = document.getElementById('tel').value;
+        if(telpp(tel)){
+            $.ajax({
+                type: 'GET',
+                url:  'http://localhost:8080/api/gettel',
+                async:false,
+                data:{
+                    tel:tel,
+                },
+                timeout:1000,
+                dataType:'json',
+                success:function (data) {
+                    if(data){
+                        document.getElementById("telMSM").innerHTML='&nbsp;';
+                        document.getElementById("bGetVc").disabled=false;
+                        return false;
+                    }else {
+                        document.getElementById("telMSM").innerHTML='<B>手机号未注册</B>';
+                        document.getElementById("bGetVc").disabled=true;
+                    }
+                }
+            });
+        }else{
+            document.getElementById("telMSM").innerHTML='<B>手机号不规范</B>';
+        }
+    }
+    //密码不对时进行提示
+    function passTest() {
+        var password = document.getElementById("password").value;
+        password = password.replace(/^\s+|\s+$/g, '');
+        if(!(/^[\w_-]{6,16}$/.test(password))){
+            document.getElementById("password").focus();
+            document.getElementById("passMSM").innerHTML='<B>只能以数字字母减号或下划线</B>';
+            return false;
+        }else{
+            document.getElementById("passMSM").innerHTML='&nbsp;';
+            return true;
+        }
+    }
+    //验证验证码格式是否正确
+    function showvc(){
+        $(function () {
+            var vc = document.getElementById('vc').value;
+            if(vcTest(vc)){
+                document.getElementById("vcMSM").innerHTML='验证码格式通过';
+            }else{
+                document.getElementById("vcMSM").innerHTML='<B>验证码为6位数字</B>';
+            }
+        });
+    }
+    //用于验证码规则验证
+    function vcTest(vc) {
+        if(/^[0-9]{6}$/.test(vc)){
+            return true;
+        }else {
+            return false;
+        }
+    }
+    //按钮倒计时
+    function getVc() {
+        var tel = document.getElementById('tel').value;
+        if(telpp(tel)){
+            $.ajax({
+                type: 'GET',
+                url:  'http://localhost:8080/api/sendyzm',
+                //sasync--异步
+                async:false,
+                data:{
+                    tel:tel,
+                },
+                timeout:1000,
+                dataType:'json',
+                success:function (data) {
+                    if(data.infoId=='5'){
+                        alert(data.info);
+                        var bGetV = document.getElementById('bGetVc');
+                        var time =60;
+                        setInterval(function () {
+                            if (time>0){
+                                bGetV.value='请等待 '+ time +' S';
+                                bGetV.disabled='true';
+                                time--;
+                            }else{
+                                bGetV.value='再次验证';
+                                bGetV.disabled='';
+                            }
+                        },1000);
+                    }else{
+                        var bGetV = document.getElementById('bGetVc');
+                        var time =60;
+                        setInterval(function () {
+                            if (time>0){
+                                bGetV.value='请等待 '+ time +' S';
+                                bGetV.disabled='true';
+                                time--;
+                            }else{
+                                bGetV.value='再次验证';
+                                bGetV.disabled='';
+                            }
+                        },1000);
+                        document.getElementById("telMSM").innerHTML=data.info;
+                    }
+                }
+
+            });
+        }else{
+            alert("请填写正确的号码！")
+        }
+    }
+    function bUpdatePass() {
+        var tel = document.getElementById('tel').value;
+        var password= document.getElementById('password').value;
+        var vc = document.getElementById('vc').value;
+        if(passTest()){
+            $.ajax({
+                type:'GET',
+                url:'http://localhost:8080/api/updatepass',
+                async:false,
+                data:{
+                    tel:tel,
+                    password:password,
+                    vc:vc,
+                },
+                success(data){
+                    if(data.infoId=='1'){
+                        alert('更新成功');
+                    }else{
+                        alert(data.info);
+                    }
+                }
+            });
+        }else{
+            alert('密码不能为空！')
+        }
+    }
+</script>
 </html>
 <style type="text/css">
     .ld{
         float: left;
         text-align: justify;
         width: 60px;
+    }
+    span{
+        color: #ff0000;
+    }
+    #registerMain{
+        width: 500px;
+        height: 300px;
+    }
+    .bRegister{
+        float: right;
+        padding-right: 54%;
+    }
+    #vc{
+        width: 80px;
     }
 </style>

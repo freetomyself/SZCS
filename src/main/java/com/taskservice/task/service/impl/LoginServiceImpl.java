@@ -78,31 +78,37 @@ public class LoginServiceImpl implements LoginService {
 //通过号码更新密码
     //true 修改成功、false 修改失败
     @Override
-    public Boolean updatePassByTel(String tel, String vc, String pass,String username) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        Boolean flag = false;
-        if(getLoginTel(tel)){
+    public String updatePassByTel(String tel, String vc, String pass) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        if (getLoginTel(tel)) {
             LoginExample loginExample = new LoginExample();
             loginExample.or().andTelEqualTo(tel).andVcEqualTo(vc);
             List<Login> logins = loginMapper.selectByExample(loginExample);
+            System.out.println(logins);
             if (!CollectionUtils.isEmpty(logins) && logins.size() > 0) {
-                loginExample.or().andTelEqualTo(tel);
+                loginExample.or().andTelEqualTo(tel).andVcEqualTo(vc);
                 Login login = new Login();
                 Md5 md5 = new Md5();
-                if(pass.trim().length()==0 || pass.trim().length()>16) {
+                if (pass.trim().length() == 0 || pass.trim().length() > 16) {
                     pass = "123456";
                 }
                 pass = md5.EncoderByMd5(pass);
                 login.setPassword(pass);
-                if (username.trim().length() > 0){
-                    login.setUsername(username);
-                }
+                System.out.println(pass);
                 loginMapper.updateByExampleSelective(login, loginExample);
-                flag = true;
+                return String.valueOf(LoginTypes.SUCCESS.getState());
             }
+            return String.valueOf(LoginTypes.YZMBAD.getState());
+        } else {
+            return String.valueOf(LoginTypes.TELNOTFIND.getState());
         }
-        return flag;
     }
-//添加用户
+
+    @Override
+    public String updatePassByTel(String tel, String vc, String pass, String username) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        return null;
+    }
+
+    //添加用户
     //手机号、用户名、密码、权限标记、验证码
     @Override
     public String insertUser(String tel, String username, String pass, int sign, String vc) throws UnsupportedEncodingException, NoSuchAlgorithmException {
@@ -125,11 +131,11 @@ public class LoginServiceImpl implements LoginService {
             login.setSign(sign);
             login.setVc(vc);
             loginMapper.insertSelective(login);
-            return LoginTypes.ZCC.getMessage();
+            return String.valueOf(LoginTypes.ZCC.getMessage());
         }else{
-        return LoginTypes.TELOVER.getMessage();
+        return String.valueOf(LoginTypes.TELOVER.getMessage());
             }
         }
-        return LoginTypes.getLoginTypes(Integer.parseInt(val));
+        return val;
     }
 }

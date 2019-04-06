@@ -18,8 +18,10 @@ public interface LoginService {
     Login getLoginTelandPass(String tel,String password) throws UnsupportedEncodingException, NoSuchAlgorithmException;
     //通过验证码登录
     Login getLoginTelandYzm(String tel, String vc);
+    //修改密码
+    String updatePassByTel(String tel, String vc, String pass) throws UnsupportedEncodingException, NoSuchAlgorithmException;
     //修改密码、修改用户名可选填（不填为原来的）
-    Boolean updatePassByTel(String tel,String vc,String pass,String username) throws UnsupportedEncodingException, NoSuchAlgorithmException;
+    String updatePassByTel(String tel, String vc, String pass, String username) throws UnsupportedEncodingException, NoSuchAlgorithmException;
     //添加账号
     String insertUser(String tel, String username, String pass, int sign, String vc) throws UnsupportedEncodingException, NoSuchAlgorithmException;
 }
