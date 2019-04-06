@@ -2,6 +2,7 @@
 客服管理系统
 ------
 1.提交所有登录，注册，修改用户信息的接口。
+![image](images/密码登录.png)
 ![image](https://github.com/freetomyself/SZCS/edit/master/images/注册用户.png)
 ![image](https://github.com/freetomyself/SZCS/edit/master/images/密码登录.png)
 2.完成密码登录/验证码登录、注册、用户密码修改的接口适配。
