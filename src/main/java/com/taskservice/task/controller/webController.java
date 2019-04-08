@@ -4,9 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 /**
  * @program: task--com.taskservice.task.controller
  * @author: WaHotDog 2019-03-09 16:49
@@ -34,6 +31,6 @@ public class webController {
     }
     @RequestMapping("/main")
     public String main(){
-        return "main";
+        return "main.html";
     }
 }

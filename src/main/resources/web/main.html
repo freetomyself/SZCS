@@ -5,18 +5,45 @@
     <title>Title</title>
 </head>
 <body>
+<div class="messagebg"></div>
 <div>
-    <iframe src="./login" width="500px" height="300px" marginwidth="100px" scrolling="no" frameborder="0"></iframe>
+    <iframe src="./register" width="500px" height="300px" marginwidth="100px" scrolling="no" frameborder="0"></iframe>
 </div>
 </body>
 <style>
+    iframe{
+        /*background: url("./web/img/loginbg1.png");*/
+        background: url("https://www.avengers.wang/img/loginbg1.png");
+        /*background : url("./loginbg1.png");*/
+    }
     body{
+        /*-webkit-filter: blur(10px); !* Chrome, Opera *!*/
+        /*-moz-filter: blur(10px);*/
+        /*-ms-filter: blur(10px);*/
+        /*filter: blur(10px);*/
         text-align: center;
-        background: azure;
+        background: url("https://www.avengers.wang/img/bodybg.jpg");
+        background-color:rgba(255,255,255,0.5);
+
+    }
+    .messagebg{
+        width:100%;
+        background: url("https://www.avengers.wang/img/bodybg.jpg");
+        background-repeat:no-repeat;
+        background-size:cover;
+        -webkit-filter:blur(15px);
+        -moz-filter:blur(15px);
+        -o-filter:blur(15px);
+        -ms-filter:blur(15px);
+        filter:blur(15px);
+        position:absolute;
+        left:0;
+        top:0;
     }
     div{
         float: right;
         padding-top: 15%;
     }
+
 </style>
 </html>

@@ -103,13 +103,12 @@ public class LoginController {
             map.put("username",username);
             return map;
         }
-        map.put("username","");
-        return map;
+        return null;
     }
 
     @ApiOperation("通过密码登录")
     @GetMapping("/login/pass")
-    public Map<String,Object> getLoginTelandPass(@RequestParam String tel, @RequestParam String password, HttpServletRequest request, HttpServletResponse response) throws NoSuchAlgorithmException, IOException {
+    public Map<String,Object> getLoginTelandPass(@RequestParam String tel, @RequestParam String password, HttpServletRequest request) throws NoSuchAlgorithmException, IOException {
         if (loginService.getLoginTelandPass(tel, password) != null) {
             HttpSession session = request.getSession();
             String username = loginService.getLoginTelandPass(tel, password).getUsername();
@@ -120,7 +119,6 @@ public class LoginController {
             resultMap.put("username",username);
             return resultMap;
         }
-        response.sendRedirect("/main");
         return null;
     }
 

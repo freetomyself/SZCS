@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <title>login</title>
 </head>
 <body>
@@ -20,20 +21,22 @@
     </div>
     <br>
     <div class="first">
-        <label class="ld">手&nbsp;机&nbsp;号</label>
-        <input type="text" id="tel" onchange="telTest()" placeholder="填写11位手机号">
+        <i class="mobile"></i>
+        <label class="ld"><B>手&nbsp;机&nbsp;号</B></label>
+        <input type="text" id="tel" onchange="telTest()" maxlength="11" placeholder="填写11位手机号" class="el-input__inner" style="height: 21px;width: 173px" >
         <br>
         <span id="telMSM">&nbsp;</span>
     </div>
+    <br>
     <div class="second">
-        <label class="ld">验&nbsp;证&nbsp;码</label>
-        <input type="text" id="vc" maxlength="6" placeholder="需获取验证码" onchange="vcTest()">
-        <input type="button" onclick="getVc() "id="bGetVc" value="获取验证码" >
-        <br>
+        <i class="messageimg"></i>
+        <label class="ld"><B>验&nbsp;证&nbsp;码</B></label>
+        <input type="text" id="vc" maxlength="6" placeholder="需获取验证码" onchange="vcTest()" class="el-input__inner" style="height: 21px;width: 130px" >
+        <input type="button" onclick="getVc() "id="bGetVc" value="获取验证码" class="el-button el-button--primary el-button--mini" >
         <span id="vcMSM">&nbsp;</span>
     </div>
     <div class="blogin">
-        <input type="button" style="width: 226px" onclick="login()"  id="blogin" value="登录">
+        <input type="button" style="width: 226px" onclick="login()"  id="blogin" value="登录" class="el-button el-button--success is-plain">
     </div>
 </div>
 </body>
@@ -147,14 +150,48 @@
 </script>
 </html>
 <style type="text/css">
+    .menu{
+        margin-left: -10px;
+    }
+    .divvc{
+        float:right;
+        padding-right: 200px;
+    }
+    .mobile{
+        background-image: url("https://www.avengers.wang/img/mobile.png");
+        position: absolute;left: 310px;z-index: 100;
+        background-repeat: no-repeat;
+        background-position: 2px 5px;
+        width: 20px;
+        height: 20px;
+    }
+    .messageimg{
+        background-image: url("https://www.avengers.wang/img/message.png");
+        position: absolute;left: 270px;z-index: 100;
+        background-repeat: no-repeat;
+        background-position: 2px 5px;
+        width: 20px;
+        height: 20px;
+    }
     .ld{
         float: left;
         text-align: justify;
         width: 60px;
     }
     .blogin{
-        float: right;
-        padding-right: 54%;
+        /*float: right;*/
+        /*padding-right: 54%;*/
+        /*position:absolute;bottom:0;*/
+        /*padding-bottom: 20px;*/
+        padding-left: 5px;
+        padding-top: 30px;
+    }
+    #bGetVc{
+        width: 70px;
+        height: 40px;
+        word-wrap: break-word !important;
+        word-break: break-all !important;
+        white-space: normal !important;
     }
     #registerMain{
         width: 500px;

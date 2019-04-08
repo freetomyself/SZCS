@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>login</title>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 </head>
 <body>
 <div id="registerMain">
@@ -21,34 +22,38 @@
     <br>
     <div>
         <div class="first" id="first">
-            <label class="ld">手&nbsp;机&nbsp;号</label>
-            <input type="text" name="tel" id="tel" onchange="telTest() " maxlength="11" placeholder="填写11位手机号">
+            <i class="mobile"></i>
+            <label class="ld"><B>手&nbsp;机&nbsp;号</B></label>
+            <input type="text" name="tel" id="tel" onchange="telTest() " maxlength="11" placeholder="填写11位手机号" class="el-input__inner" style="height: 21px;width: 173px" >
             <br>
             <span  id="telMSM">&nbsp;</span >
         </div>
     </div>
     <div>
         <div class="second" id="second">
-            <label class="ld">密&nbsp;&nbsp;&nbsp;码</label>
-            <input type="password" id="password" onchange="passTest()" maxlength="16" placeholder="密码最少6位">
+            <i class="passimg"></i>
+            <label class="ld"><B>密&nbsp;&nbsp;&nbsp;码</B></label>
+            <input type="password" id="password" onchange="passTest()" maxlength="16" placeholder="密码最少6位" class="el-input__inner" style="height: 21px;width: 173px" >
             <br>
             <span id="passMSM">&nbsp;</span>
         </div>
         <div>
-            <label class="ld">用&nbsp;户&nbsp;名</label>
-            <input type="text" id="username"  maxlength="8" placeholder="名字最长8个字符" onchange="usernameTest()">
+            <i class="userimg"></i>
+            <label class="ld"><B>用&nbsp;户&nbsp;名</B></label>
+            <input type="text" id="username"  maxlength="8" placeholder="名字最长8个字符" onchange="usernameTest()" class="el-input__inner" style="height: 21px;width: 173px" >
             <br>
             <span id="usernameMSM">&nbsp;</span>
         </div>
         <div>
-            <label class="ld">验&nbsp;证&nbsp;码</label>
-            <input type="text" id="vc" disabled="true" maxlength="6" placeholder="需获取验证码" onchange="showvc()">
-            <input type="button" onclick="getVc()" id="bGetVc" value="获取验证码" disabled="disabled">
+            <i class="messageimg"></i>
+            <label class="ld"><B>验&nbsp;证&nbsp;码</B></label>
+            <input type="text" id="vc" disabled="true" maxlength="6" placeholder="需获取验证码" onchange="showvc()" class="el-input__inner" style="height: 21px;width: 130px" >
+            <input type="button" onclick="getVc()" id="bGetVc" value="获取验证码" disabled="disabled" class="el-button el-button--primary el-button--mini">
             <br>
             <span id="vcMSM">&nbsp;</span>
         </div>
         <div class="bRegister">
-            <button onclick="register()" disabled="true" id="bRegister" style="width: 226px" >注册</button>
+            <input onclick="register()" disabled="true" id="bRegister" style="width: 226px" class="el-button el-button--success is-plain" value="注册">
         </div>
     </div>
 </div>
@@ -239,6 +244,32 @@
 </script>
 </html>
 <style type="text/css">
+    .menu{
+        margin-left: -10px;
+    }
+    #bGetVc{
+        width: 70px;
+        height: 40px;
+        word-wrap: break-word !important;
+        word-break: break-all !important;
+        white-space: normal !important;
+    }
+    .mobile{
+        background-image: url("https://www.avengers.wang/img/mobile.png");
+        position: absolute;left: 310px;z-index: 100;
+        background-repeat: no-repeat;
+        background-position: 2px 5px;
+        width: 20px;
+        height: 20px;
+    }
+    .userimg{
+        background-image: url("https://www.avengers.wang/img/userimg.png");
+        position: absolute;left: 310px;z-index: 100;
+        background-repeat: no-repeat;
+        background-position: 2px 5px;
+        width: 20px;
+        height: 20px;
+    }
     .ld{
         float: left;
         text-align: justify;
@@ -251,9 +282,28 @@
         width: 500px;
         height: 300px;
     }
+    .passimg{
+        background-image: url("https://www.avengers.wang/img/passimg.png");
+        position: absolute;left: 310px;z-index: 100;
+        background-repeat: no-repeat;
+        background-position: 2px 5px;
+        width: 20px;
+        height: 20px;
+    }
+    .messageimg{
+        background-image: url("https://www.avengers.wang/img/message.png");
+        position: absolute;left: 270px;z-index: 100;
+        background-repeat: no-repeat;
+        background-position: 2px 5px;
+        width: 20px;
+        height: 20px;
+    }
     .bRegister{
-        float: right;
-        padding-right: 54%;
+        /*float: right;*/
+        /*padding-right: 54%;*/
+        position:absolute;bottom:0;
+        padding-bottom: 20px;
+        padding-left: 5px;
     }
     #vc{
         width: 80px;

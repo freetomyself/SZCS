@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://vuejs.org/js/vue.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <title>login</title>
 </head>
 <body>
@@ -21,19 +22,23 @@
     </div>
     <br>
     <div class="first">
-        <label class="ld" >手&nbsp;机&nbsp;号</label>
-        <input type="text" maxlength="11" id="tel" onchange="telTest()" placeholder="填写11位手机号">
+        <i class="mobile"></i>
+        <label class="ld" ><B>手&nbsp;机&nbsp;号</B></label>
+        <input type="text" maxlength="11" id="tel" onchange="telTest()" placeholder="填写11位手机号" class="el-input__inner" style="height: 21px;width: 173px" >
         <br>
         <span id="telMSM">&nbsp;</span>
     </div>
+    <br>
     <div class="second">
-        <label class="ld" >密&nbsp;&nbsp;&nbsp;码</label>
-        <input type="password"  maxlength="16" onchange="passTest()" id="password" placeholder="密码最少6位">
+        <i class="passimg"></i>
+        <label class="ld" ><B>密&nbsp;&nbsp;&nbsp;码</B></label>
+        <input type="password"  maxlength="16" onchange="passTest()" id="password" placeholder="密码最少6位" class="el-input__inner" style="height: 21px;width: 173px" >
         <br>
         <span id="passMSM">&nbsp;</span>
     </div>
+    <br>
     <div class="blogin">
-        <button type="button" onclick="login()" id="blogin" style="width: 226px">登录</button>
+        <input type="button" onclick="login()" id="blogin" style="width: 226px" class="el-button el-button--success is-plain" value="登录">
     </div>
 </div>
 </body>
@@ -96,6 +101,25 @@
 </script>
 </html>
 <style type="text/css">
+    .menu{
+        margin-left: -10px;
+    }
+    .mobile{
+        background-image: url("https://www.avengers.wang/img/mobile.png");
+        position: absolute;left: 310px;z-index: 100;
+        background-repeat: no-repeat;
+        background-position: 2px 5px;
+        width: 20px;
+        height: 20px;
+    }
+    .passimg{
+        background-image: url("https://www.avengers.wang/img/passimg.png");
+        position: absolute;left: 310px;z-index: 100;
+        background-repeat: no-repeat;
+        background-position: 2px 5px;
+        width: 20px;
+        height: 20px;
+    }
     #app{
         width: 500px;
         height: 300px;
@@ -109,7 +133,10 @@
         color: red;
     }
     .blogin{
-        float: right;
-        padding-right: 54%;
+        /*float: right;*/
+        /*padding-right: 54%;*/
+        /*position:absolute;bottom:0;*/
+        /*padding-bottom: 20px;*/
+        padding-left: 5px;
     }
 </style>
