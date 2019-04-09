@@ -13,9 +13,9 @@
     <div class="menu">
         <table>
             <tr>
-                <td><a href="./login">密码登录</a>丨</td>
-                <td><a href="./vclogin">验证码登录</a>丨</td>
-                <td><a href="./update">修改密码</a></td>
+                <td><button type="button" class="el-button el-button--primary" onclick="window.location.href = './login'"><span style="color: white">密码登录</span></i></button></td>
+                <td><button type="button" class="el-button el-button--primary" onclick="window.location.href = './vclogin'"><span style="color: white">验证码登录</span></i></button></td>
+                <td><button type="button" class="el-button el-button--primary" onclick="window.location.href = './update'"><span style="color: white">修改</span></i></button></td>
             </tr>
         </table>
     </div>
@@ -245,7 +245,8 @@
 </html>
 <style type="text/css">
     .menu{
-        margin-left: -10px;
+        margin-left: -20px;
+
     }
     #bGetVc{
         width: 70px;
@@ -302,7 +303,7 @@
         /*float: right;*/
         /*padding-right: 54%;*/
         position:absolute;bottom:0;
-        padding-bottom: 20px;
+        padding-bottom: 7px;
         padding-left: 5px;
     }
     #vc{

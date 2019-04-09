@@ -13,9 +13,9 @@
     <div class="menu">
         <table>
             <tr>
-                <td><a href="./login">密码登录</a>丨</td>
-                <td><a href="./vclogin">验证码登录</a>丨</td>
-                <td><a href="./register">注册账户</a></td>
+                <td><button type="button" class="el-button el-button--primary" onclick="window.location.href = './login'"><span style="color: white">密码登录</span></i></button></td>
+                <td><button type="button" class="el-button el-button--primary" onclick="window.location.href = './vclogin'"><span style="color: white">验证码登录</span></i></button></td>
+                <td><button type="button" class="el-button el-button--primary" onclick="window.location.href = './register'"><span style="color: white">注册账户</span></i></button></td>
             </tr>
         </table>
     </div>
@@ -24,7 +24,6 @@
         <i class="mobile"></i>
         <label class="ld"><B>手&nbsp;机&nbsp;号</B></label>
         <input type="text"  id="tel" onchange="telTest() " maxlength="11" placeholder="填写11位手机号" class="el-input__inner" style="height: 21px;width: 173px" >
-        <br>
         <span id="telMSM">&nbsp;</span>
     </div>
     <br>
@@ -35,8 +34,7 @@
         <input type="button" onclick="getVc()" id="bGetVc" value="获取验证码" disabled="disabled" class="el-button el-button--primary el-button--mini">
         <span id="vcMSM">&nbsp;</span>
     </div>
-    <br>
-    <div>
+    <div class="newpass">
         <i class="passimg"></i>
         <label class="ld"><B>新&nbsp;密&nbsp;码</B></label>
         <input type="password" id="password" onchange="passTest()" maxlength="16" placeholder="密码最少6位" class="el-input__inner" style="height: 21px;width: 173px" >
@@ -199,7 +197,10 @@
 </html>
 <style type="text/css">
     .menu{
-        margin-left: -10px;
+        margin-left: -40px;
+    }
+    .newpass{
+        padding-top: 5px;
     }
     #bGetVc{
         width: 70px;
@@ -248,7 +249,7 @@
         /*float: right;*/
         /*padding-right: 54%;*/
         /*position:absolute;bottom:0;*/
-        /*padding-bottom: 20px;*/
+        padding-bottom: -20px;
         padding-left: 5px;
     }
     #vc{
