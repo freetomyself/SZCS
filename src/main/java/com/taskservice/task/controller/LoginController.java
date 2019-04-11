@@ -164,7 +164,7 @@ public class LoginController {
     @GetMapping("/unlogin")
     public String  unlogin(HttpServletRequest request,HttpServletResponse response) throws IOException {
         request.getSession().invalidate();
-        response.sendRedirect("/main");
+        response.sendRedirect(request.getContextPath()+"/"+"main");
         return null;
     }
 

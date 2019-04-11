@@ -31,6 +31,6 @@ public class webController {
     }
     @RequestMapping("/main")
     public String main(){
-        return "main.html";
+        return "main";
     }
 }

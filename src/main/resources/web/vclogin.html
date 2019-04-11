@@ -50,7 +50,7 @@
         if (vcTest()&&telpp(tel)){
             $.ajax({
                 type: 'GET',
-                url:  'http://localhost:8080/api/login/vc',
+                url:  './api/login/vc',
                 async:false,
                 data:{
                     tel:tel,
@@ -105,7 +105,7 @@
         if(telpp(tel)){
             $.ajax({
                 type: 'GET',
-                url:  'http://localhost:8080/api/sendyzm',
+                url:  './api/sendyzm',
                 //sasync--异步
                 async:false,
                 data:{

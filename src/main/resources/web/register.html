@@ -75,7 +75,7 @@
             // alert("验证码已发送");
             $.ajax({
                 type: 'GET',
-                url:  'http://localhost:8080/api/inserttel',
+                url:  './api/inserttel',
                 async:false,
                 data:{
                     tel:tel,
@@ -113,7 +113,7 @@
         if(telpp(tel)){
             $.ajax({
                 type: 'GET',
-                url:  'http://localhost:8080/api/gettel',
+                url:  './api/gettel',
                 async:false,
                 data:{
                     tel:tel,
@@ -198,7 +198,7 @@
         test4=vcTest(vc);
         if (test1&&test2&&test3&&test4){
             $.ajax({
-                url:'http://localhost:8080/api/yzmtt',
+                url:'./api/yzmtt',
                 async: true,
                 data: {
                     tel:tel,
@@ -212,7 +212,7 @@
                     if (data.infoId=="1"){
                         // alert('手机号验证码验证成功')
                         $.ajax({
-                            url:'http://localhost:8080/api/insertuser',
+                            url:'./api/insertuser',
                             async:false,
                             data:{
                                 tel:tel,
@@ -226,7 +226,7 @@
                             success:function (data) {
                                 if(data.infoId=="1"){
                                     alert("恭喜你注册成功");
-                                    window.location.href='http://localhost:8080/api/login'
+                                    window.location.href='./api/login'
                                 }else{
                                     alert(data.info);
                                 }

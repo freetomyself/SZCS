@@ -62,7 +62,7 @@
         if(telpp(tel)){
             $.ajax({
                 type: 'GET',
-                url:  'http://localhost:8080/api/gettel',
+                url:  './api/gettel',
                 async:false,
                 data:{
                     tel:tel,
@@ -122,7 +122,7 @@
         if(telpp(tel)){
             $.ajax({
                 type: 'GET',
-                url:  'http://localhost:8080/api/sendyzm',
+                url:  './api/sendyzm',
                 //sasync--异步
                 async:false,
                 data:{
@@ -174,7 +174,7 @@
         if(passTest()){
             $.ajax({
                 type:'GET',
-                url:'http://localhost:8080/api/updatepass',
+                url:'./api/updatepass',
                 async:false,
                 data:{
                     tel:tel,

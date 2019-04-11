@@ -1,5 +1,6 @@
 package com.taskservice.task.Configurers;
 
+import com.taskservice.task.tool.EmptyUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,8 +20,12 @@ public class LoginInterceptor implements HandlerInterceptor {
         System.out.println(response);
         System.out.println("1111111111");
         Object username = request.getSession().getAttribute("username");
-        if(null ==  username || !(username instanceof  String)){
-            response.sendRedirect("/main");
+        //调用混子大佬提供的判断是否为空的工具
+        EmptyUtils emptyUtils = new EmptyUtils();
+//        null ==  username || !(username instanceof  String)
+        System.out.println(emptyUtils.equals(username));
+        if(!emptyUtils.equals(username)){
+            response.sendRedirect(request.getContextPath()+"/"+"main");
             System.out.println("2222222222---fail");
             return false;
         }

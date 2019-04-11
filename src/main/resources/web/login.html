@@ -52,7 +52,7 @@
         if (passTest()&&telpp(tel)){
             $.ajax({
                 type: 'GET',
-                url:  'http://localhost:8080/api/login/pass',
+                url:  './api/login/pass',
                 async:false,
                 data:{
                     tel:tel,
