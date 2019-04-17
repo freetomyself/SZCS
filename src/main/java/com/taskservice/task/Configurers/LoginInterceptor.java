@@ -24,7 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         EmptyUtils emptyUtils = new EmptyUtils();
 //        null ==  username || !(username instanceof  String)
         System.out.println(emptyUtils.equals(username));
-        if(!emptyUtils.equals(username)){
+        if(!emptyUtils.equals(username) || username == "1"){
             response.sendRedirect(request.getContextPath()+"/"+"main");
             System.out.println("2222222222---fail");
             return false;
