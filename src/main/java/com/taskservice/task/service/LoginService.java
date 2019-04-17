@@ -4,6 +4,7 @@ import com.taskservice.task.po.Login;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 /**
  * @program: task--com.taskservice.task.service
@@ -24,4 +25,7 @@ public interface LoginService {
     String updatePassByTel(String tel, String vc, String pass, String username) throws UnsupportedEncodingException, NoSuchAlgorithmException;
     //添加账号
     String insertUser(String tel, String username, String pass, int sign, String vc) throws UnsupportedEncodingException, NoSuchAlgorithmException;
+    //获取用户名
+    Login getUsername(String tel);
 }
+

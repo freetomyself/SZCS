@@ -74,8 +74,8 @@
     function getVc() {
         var tel = document.getElementById('tel').value;
         // $('#vc').attr('disabled',false);
+        console.log(tel)
         if(telpp(tel)){
-            // alert("验证码已发送");
             $.ajax({
                 type: 'GET',
                 url:  './api/inserttel',
@@ -86,6 +86,7 @@
                 timeout:1000,
                 dataType:'json',
                 success:function (data) {
+                    console.log(data)
                     if(data.infoId=='5'){
                         alert(data.info);
                         var bGetV = document.getElementById('bGetVc');
@@ -135,7 +136,6 @@
             });
         }else{
             document.getElementById("telMSM").innerHTML='<B>手机号不规范</B>';
-            document.getElementById("bGetVc").disabled=true;
         }
     }
     //密码不对时进行提示
@@ -213,7 +213,7 @@
                         // alert('手机号验证码验证成功')
                         $.ajax({
                             type: 'GET',
-                            url:'./api/insertuser',
+                            url:'./api/insertuu',
                             async:false,
                             data:{
                                 tel:tel,

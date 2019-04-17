@@ -4,13 +4,11 @@ import com.taskservice.task.enums.LoginTypes;
 import com.taskservice.task.po.Login;
 import com.taskservice.task.service.LoginService;
 import com.taskservice.task.service.VcresourcesService;
+import com.taskservice.task.tool.EmptyUtils;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.CustomAutowireConfigurer;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +18,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -100,10 +99,14 @@ public class LoginController {
             HttpSession session = request.getSession();
             String username = loginService.getLoginTelandYzm(tel, vc).getUsername();
             session.setAttribute("username", username);
+            session.setAttribute("mobile",tel);
             map.put("username",username);
             return map;
+        }else{
+            Map<String,Object> resultMap = new HashMap<String,Object>();
+            resultMap.put("username",1);
+            return resultMap;
         }
-        return null;
     }
 
     @ApiOperation("通过密码登录")
@@ -114,12 +117,38 @@ public class LoginController {
             String username = loginService.getLoginTelandPass(tel, password).getUsername();
             System.out.println(username);
             session.setAttribute("username", username);
+            session.setAttribute("mobile",tel);
 //            response.sendRedirect("/success");
             Map<String,Object> resultMap = new HashMap<String,Object>();
             resultMap.put("username",username);
+            resultMap.put("mobile",tel);
+            return resultMap;
+        }else{
+            Map<String,Object> resultMap = new HashMap<String,Object>();
+            resultMap.put("username",1);
             return resultMap;
         }
-        return null;
+    }
+    @ApiOperation("用于获取用户登录信息")
+    @GetMapping("/userinfo")
+    public Map<Object,String> getUserInfo(HttpServletRequest request){
+        Map<Object,String> map = new HashMap<Object,String>();
+        HttpSession session = request.getSession();
+        String tel = (String) session.getAttribute("mobile");
+        EmptyUtils emptyUtils = new EmptyUtils();
+        if (emptyUtils.isEmpty(tel)){
+            map.put("username","null");
+            return map;
+        }else{
+            System.out.println(tel);
+            Login logininfo= loginService.getUsername(tel);
+            String username= logininfo.getUsername();
+            int sign1= logininfo.getSign();
+            map.put("username",username);
+            map.put("tel",tel);
+            map.put("sign", String.valueOf(sign1));
+            return map;
+        }
     }
 
     @ApiOperation("通过手机号、更新密码、用户名（可以不填，不填为原值）")

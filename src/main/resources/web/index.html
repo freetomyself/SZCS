@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+欢迎，<span id="username">&nbsp;</span><input type="button" onclick="unlogin()" value="注销">
+</body>
+<script>
+    window.onload=function(){
+        $.ajax({
+            type:'GET',
+            url:'./api/userinfo',
+            async:false,
+            data:{
+            },
+            timeout:1000,
+            dataType:'json',
+            success:function (data) {
+                console.log(data)
+                document.getElementById('username').innerHTML=data.username;
+            }
+        });
+    }
+    function unlogin() {
+        $.ajax({
+            type:'GET',
+            url:'./api/unlogin',
+            async:false,
+            data:{
+            },
+            timeout:1000,
+            dataType:'json',
+            success:function () {
+            }
+        });
+        window.location.href='./main'
+    }
+</script>
+</html>

@@ -63,8 +63,8 @@
                 timeout:1000,
                 dataType:'json',
                 success:function (data) {
-                    if((data.username).length>1){
-                        window.location.href="https://www.avengers.wang/";
+                    if((data.username)!=1){
+                        window.parent.location.href="./index";
                     }else {
                         alert('验证码错误！');
                     }

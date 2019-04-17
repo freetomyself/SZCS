@@ -22,10 +22,12 @@ public class LoginConfiguration implements WebMvcConfigurer {
         loginRegistry.excludePathPatterns("/api/sendyzm");
         loginRegistry.excludePathPatterns("/api/insertuu");
         loginRegistry.excludePathPatterns("/api/updatepass");
+        loginRegistry.excludePathPatterns("/api/userinfo");
         loginRegistry.excludePathPatterns("/login");
         loginRegistry.excludePathPatterns("/register");
         loginRegistry.excludePathPatterns("/vclogin");
         loginRegistry.excludePathPatterns("/update");
         loginRegistry.excludePathPatterns("/main");
+        loginRegistry.excludePathPatterns("/index");
     }
 }

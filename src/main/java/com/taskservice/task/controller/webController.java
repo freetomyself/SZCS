@@ -33,4 +33,9 @@ public class webController {
     public String main(){
         return "/main";
     }
+    @RequestMapping("/index")
+    public String index(){
+        return "/index";
+    }
+
 }

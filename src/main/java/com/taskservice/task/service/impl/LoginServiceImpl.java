@@ -47,16 +47,13 @@ public class LoginServiceImpl implements LoginService {
 //通过密码登录
     @Override
     public Login getLoginTelandPass(String tel, String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        Boolean flag = false;
         Md5 md5 = new Md5();
         password = md5.EncoderByMd5(password);
         LoginExample loginExample = new LoginExample();
         loginExample.or().andTelEqualTo(tel).andPasswordEqualTo(password);
         List<Login> logins = loginMapper.selectByExample(loginExample);
-        String username = null;
         if (!CollectionUtils.isEmpty(logins) && logins.size() > 0) {
             Login login = logins.get(0);
-            username = login.getUsername();
             return login;
         }
         return null;
@@ -137,5 +134,19 @@ public class LoginServiceImpl implements LoginService {
             }
         }
         return val;
+    }
+
+    @Override
+    public Login getUsername(String tel) {
+        LoginExample loginExample = new LoginExample();
+        loginExample.or().andTelEqualTo(tel);
+        List<Login> logins =loginMapper.selectByExample(loginExample);
+        if (!CollectionUtils.isEmpty(logins) && logins.size() > 0) {
+            Login login = logins.get(0);
+            return login;
+        }else{
+            return null;
+        }
+
     }
 }

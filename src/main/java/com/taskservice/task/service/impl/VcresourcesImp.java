@@ -59,7 +59,8 @@ public class VcresourcesImp implements VcresourcesService {
             vcresourcesExample.or().andTelEqualTo(tel).andInserttimeBetween(getDay.initDateByMorning(),getDay.initDateByNight());
             List<Vcresources> vcresourcess = vcresourcesMapper.selectByExample(vcresourcesExample);
             if (vcresourcess.size()>=5){
-                return LoginTypes.SMSOUT.getMessage() + "当前发送条数为：" + vcresourcess.size();
+                return String.valueOf(LoginTypes.SMSOUT.getState());
+//                        + "当前发送条数为：" + vcresourcess.size();
             }else{
                 //此处需要添加一个号码验证
                 Vcresources vcresources = new Vcresources();
