@@ -91,7 +91,7 @@
                         alert(data.info);
                         var bGetV = document.getElementById('bGetVc');
                         var time =60;
-                        setInterval(function () {
+                        var i =setInterval(function () {
                             if (time>0){
                                 bGetV.value='请等待 '+ time +' S';
                                 bGetV.disabled='true';
@@ -99,6 +99,7 @@
                             }else{
                                 bGetV.value='再次验证';
                                 bGetV.disabled='';
+                                clearInterval(i)
                             }
                         },1000);
                     }else{
@@ -246,7 +247,7 @@
 </html>
 <style type="text/css">
     .menu{
-        margin-left: -20px;
+        margin-left: -25px;
 
     }
     #bGetVc{
@@ -257,20 +258,20 @@
         white-space: normal !important;
     }
     .mobile{
-        background-image: url("https://www.avengers.wang/img/mobile.png");
+        background-image: url("https://www.avengers.wang/PWarehouse/smalldpg/img/mobile.png");
         position: absolute;left: 310px;z-index: 100;
         background-repeat: no-repeat;
         background-position: 2px 5px;
         width: 20px;
-        height: 20px;
+        height: 21px;
     }
     .userimg{
-        background-image: url("https://www.avengers.wang/img/userimg.png");
+        background-image: url("https://www.avengers.wang/PWarehouse/smalldpg/img/userimg.png");
         position: absolute;left: 310px;z-index: 100;
         background-repeat: no-repeat;
         background-position: 2px 5px;
         width: 20px;
-        height: 20px;
+        height: 21px;
     }
     .ld{
         float: left;
@@ -285,20 +286,20 @@
         height: 300px;
     }
     .passimg{
-        background-image: url("https://www.avengers.wang/img/passimg.png");
+        background-image: url("https://www.avengers.wang/PWarehouse/smalldpg/img/passimg.png");
         position: absolute;left: 310px;z-index: 100;
         background-repeat: no-repeat;
         background-position: 2px 5px;
         width: 20px;
-        height: 20px;
+        height: 21px;
     }
     .messageimg{
-        background-image: url("https://www.avengers.wang/img/message.png");
+        background-image: url("https://www.avengers.wang/PWarehouse/smalldpg/img/message.png");
         position: absolute;left: 270px;z-index: 100;
         background-repeat: no-repeat;
         background-position: 2px 5px;
         width: 20px;
-        height: 20px;
+        height: 21px;
     }
     .bRegister{
         /*float: right;*/

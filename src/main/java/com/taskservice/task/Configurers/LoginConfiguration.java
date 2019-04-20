@@ -13,21 +13,24 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class LoginConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
+        WebMvcConfigurer.super.addInterceptors(registry);
         LoginInterceptor loginInterceptor = new LoginInterceptor();
-        InterceptorRegistration loginRegistry = registry.addInterceptor(loginInterceptor);
-        loginRegistry.excludePathPatterns("/api/**");
-        loginRegistry.excludePathPatterns("/api/login/pass");
-        loginRegistry.excludePathPatterns("/api/login/vc");
-        loginRegistry.excludePathPatterns("/api/yzmtest");
-        loginRegistry.excludePathPatterns("/api/sendyzm");
-        loginRegistry.excludePathPatterns("/api/insertuu");
-        loginRegistry.excludePathPatterns("/api/updatepass");
-        loginRegistry.excludePathPatterns("/api/userinfo");
-        loginRegistry.excludePathPatterns("/login");
-        loginRegistry.excludePathPatterns("/register");
-        loginRegistry.excludePathPatterns("/vclogin");
-        loginRegistry.excludePathPatterns("/update");
-        loginRegistry.excludePathPatterns("/main");
-        loginRegistry.excludePathPatterns("/index");
+        registry.addInterceptor(loginInterceptor).addPathPatterns("/context/**");
+//                .excludePathPatterns("/login");
+//        InterceptorRegistration loginRegistry = registry.addInterceptor(loginInterceptor);
+//        loginRegistry.excludePathPatterns("/api/**");
+//        loginRegistry.excludePathPatterns("/api/login/pass");
+//        loginRegistry.excludePathPatterns("/api/login/vc");
+//        loginRegistry.excludePathPatterns("/api/yzmtest");
+//        loginRegistry.excludePathPatterns("/api//sendyzm");
+//        loginRegistry.excludePathPatterns("/api/insertuu");
+//        loginRegistry.excludePathPatterns("/api/updatepass");
+//        loginRegistry.excludePathPatterns("/api/userinfo");
+//        loginRegistry.excludePathPatterns("/login");
+//        loginRegistry.excludePathPatterns("/register");
+//        loginRegistry.excludePathPatterns("/vclogin");
+//        loginRegistry.excludePathPatterns("/update");
+//        loginRegistry.excludePathPatterns("/main");
+//        loginRegistry.excludePathPatterns("/index");
     }
 }

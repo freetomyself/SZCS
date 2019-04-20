@@ -1,44 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:background-attachment="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
 </head>
 <body>
-<div class="messagebg"></div>
 <div>
-    <iframe src="./login" width="500px" height="300px" marginwidth="100px" scrolling="no" frameborder="0"></iframe>
+    <iframe src="./login" width="420px" height="300px" marginwidth="100px" scrolling="no" frameborder="0" style="padding-left: 6%" ></iframe>
 </div>
+
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
 </body>
 <style>
+    html { overflow-x: hidden; overflow-y: auto; }
     iframe{
-        /*background: url("./web/img/loginbg1.png");*/
-        background: url("https://www.avengers.wang/img/loginbg1.png");
-        /*background : url("./loginbg1.png");*/
+        background: url("https://www.avengers.wang/PWarehouse/smalldpg/img/loginbg1.png") no-repeat 0 0;
+        background-position-x: 70%;
     }
     body{
-        /*-webkit-filter: blur(10px); !* Chrome, Opera *!*/
-        /*-moz-filter: blur(10px);*/
-        /*-ms-filter: blur(10px);*/
-        /*filter: blur(10px);*/
-        text-align: center;
-        background: url("https://www.avengers.wang/img/bodybg.jpg");
-        background-color:rgba(255,255,255,0.5);
-
-    }
-    .messagebg{
-        width:100%;
-        background: url("https://www.avengers.wang/img/bodybg.jpg");
-        background-repeat:no-repeat;
-        background-size:cover;
-        -webkit-filter:blur(15px);
-        -moz-filter:blur(15px);
-        -o-filter:blur(15px);
-        -ms-filter:blur(15px);
-        filter:blur(15px);
-        position:absolute;
-        left:0;
-        top:0;
+        background: url("https://www.avengers.wang/PWarehouse/smalldpg/img/bg.jpg")no-repeat center 0px;
+        background-position: center 0;
+        background-size: cover;
+        background-color: aliceblue;
     }
     div{
         float: right;

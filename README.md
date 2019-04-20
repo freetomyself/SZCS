@@ -8,4 +8,4 @@
 ![image](images/vc.png)<br>
 3.修改密码功能完成修改接口功能，注册界面接口调试。<br>
 ![image](images/update.png)
-
+因为服务器中途出了点问题，之后发现需要改进之处由此次提交完成

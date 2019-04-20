@@ -106,6 +106,7 @@
     //按钮倒计时
     function getVc() {
         var tel = document.getElementById('tel').value;
+        var i,j;
         if(telpp(tel)){
             $.ajax({
                 type: 'GET',
@@ -118,37 +119,39 @@
                 timeout:1000,
                 dataType:'json',
                 success:function (data) {
-                    if(data.infoId=='5'){
+                    var time = 60;
+                    if (data.infoId == '5') {
                         alert(data.info);
+                        document.getElementById("telMSM").innerHTML = "&nbsp;";
                         var bGetV = document.getElementById('bGetVc');
-                        var time =60;
-                        setInterval(function () {
-                            if (time>0){
-                                bGetV.value='请等待 '+ time +' S';
-                                bGetV.disabled='true';
+                        i = setInterval(function () {
+                            if (time > 0) {
+                                bGetV.value = '请等待 ' + time + ' S';
+                                bGetV.disabled = 'true';
                                 time--;
-                            }else{
-                                bGetV.value='再次验证';
-                                bGetV.disabled='';
+                            } else {
+                                bGetV.value = '再次验证';
+                                bGetV.disabled = '';
+                                clearInterval(i)
                             }
-                        },1000);
-                    }else{
+                        }, 1000);
+                    } else {
                         var bGetV = document.getElementById('bGetVc');
-                        var time =60;
-                        setInterval(function () {
-                            if (time>0){
-                                bGetV.value='请等待 '+ time +' S';
-                                bGetV.disabled='true';
+                        j = setInterval(function () {
+                            console.log(time);
+                            if (time > 0) {
+                                bGetV.value = '请等待 ' + time + ' S';
+                                bGetV.disabled = 'true';
                                 time--;
-                            }else{
-                                bGetV.value='再次验证';
-                                bGetV.disabled='';
+                            } else {
+                                bGetV.value = '再次验证';
+                                bGetV.disabled = '';
+                                clearInterval(j)
                             }
-                        },1000);
-                        document.getElementById("telMSM").innerHTML=data.info;
+                        }, 1000);
+                        document.getElementById("telMSM").innerHTML = data.info;
                     }
                 }
-
             });
         }else{
             alert("请填写正确的号码！")
@@ -158,27 +161,27 @@
 </html>
 <style type="text/css">
     .menu{
-        margin-left: -10px;
+        margin-left: -5px;
     }
-    .divvc{
-        float:right;
-        padding-right: 200px;
-    }
+    /*.divvc{*/
+        /*float:right;*/
+        /*padding-right: 200px;*/
+    /*}*/
     .mobile{
-        background-image: url("https://www.avengers.wang/img/mobile.png");
+        background-image: url("https://www.avengers.wang/PWarehouse/smalldpg/img/mobile.png");
         position: absolute;left: 310px;z-index: 100;
         background-repeat: no-repeat;
         background-position: 2px 5px;
         width: 20px;
-        height: 20px;
+        height: 21px;
     }
     .messageimg{
-        background-image: url("https://www.avengers.wang/img/message.png");
+        background-image: url("https://www.avengers.wang/PWarehouse/smalldpg/img/message.png");
         position: absolute;left: 270px;z-index: 100;
         background-repeat: no-repeat;
         background-position: 2px 5px;
         width: 20px;
-        height: 20px;
+        height: 21px;
     }
     .ld{
         float: left;
