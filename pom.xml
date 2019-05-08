@@ -111,6 +111,7 @@
             <version>2.6.0</version>
         </dependency>
         <!--Thymeleaf是个XML/XHTML/HTML5模板引擎，可以用于Web与非Web应用-->
+        <!--如果需要是本地服务器能访问图片需要在resources创建一个static文件夹将资源放入其中即可-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
